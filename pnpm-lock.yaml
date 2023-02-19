@@ -1,14 +1,18 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/three': ^0.149.0
   mind-ar: ^1.2.0
+  three: ^0.149.0
   typescript: ^4.9.3
   vite: ^4.1.0
 
 dependencies:
-  mind-ar: 1.2.0
+  mind-ar: 1.2.0_three@0.149.0
+  three: 0.149.0
 
 devDependencies:
+  '@types/three': 0.149.0
   typescript: 4.9.5
   vite: 4.1.2
 
@@ -361,6 +365,12 @@ packages:
     resolution: {integrity: sha512-AnxLHewubLVzoF/A4qdxBGHCKifw8cY32iro3DQX9TPcetE95zBeVt3jnsvtvAUf1vwzMfwzp4t/L2yqPlnjkQ==}
     dev: false
 
+  /@types/three/0.149.0:
+    resolution: {integrity: sha512-fgNBm9LWc65ER/W0cvoXdC0iMy7Ke9e2CONmEr6Jt8sDSY3sw4DgOubZfmdZ747dkPhbQrgRQAWwDEr2S/7IEg==}
+    dependencies:
+      '@types/webxr': 0.5.1
+    dev: true
+
   /@types/webgl-ext/0.0.30:
     resolution: {integrity: sha512-LKVgNmBxN0BbljJrVUwkxwRYqzsAEPcZOe6S2T6ZaBDIrFp0qu4FNlpc5sM1tGbXUYFgdVQIoeLk1Y1UoblyEg==}
     dev: false
@@ -368,6 +378,10 @@ packages:
   /@types/webgl2/0.0.6:
     resolution: {integrity: sha512-50GQhDVTq/herLMiqSQkdtRu+d5q/cWHn4VvKJtrj4DJAjo1MNkWYa2MA41BaBO1q1HgsUjuQvEOk0QHvlnAaQ==}
     dev: false
+
+  /@types/webxr/0.5.1:
+    resolution: {integrity: sha512-xlFXPfgJR5vIuDefhaHuUM9uUgvPaXB6GKdXy2gdEh8gBWQZ2ul24AJz3foUd8NNKlSTQuWYJpCb1/pL81m1KQ==}
+    dev: true
 
   /@webgpu/types/0.1.16:
     resolution: {integrity: sha512-9E61voMP4+Rze02jlTXud++Htpjyyk8vw5Hyw9FGRrmhHQg2GqbuOfwf5Klrb8vTxc2XWI3EfO7RUHMpxTj26A==}
@@ -759,7 +773,7 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /mind-ar/1.2.0:
+  /mind-ar/1.2.0_three@0.149.0:
     resolution: {integrity: sha512-WtQx0csmbzoub46U3lv3467Gp7XIsH46C2LnKGxpt833EAipk1IBtbw5th6kTA/0nmz1pSq6gKrHyACMSpu4EQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -772,6 +786,7 @@ packages:
       mathjs: 11.5.1
       ml-matrix: 6.10.4
       svd-js: 1.1.1
+      three: 0.149.0
       tinyqueue: 2.0.3
     transitivePeerDependencies:
       - encoding
@@ -1054,6 +1069,10 @@ packages:
       minizlib: 2.1.2
       mkdirp: 1.0.4
       yallist: 4.0.0
+    dev: false
+
+  /three/0.149.0:
+    resolution: {integrity: sha512-tohpUxPDht0qExRLDTM8sjRLc5d9STURNrdnK3w9A+V4pxaTBfKWWT/IqtiLfg23Vfc3Z+ImNfvRw1/0CtxrkQ==}
     dev: false
 
   /tiny-emitter/2.1.0:
