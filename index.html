@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+      #control {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="control" style="z-index: 100">
+      <button id="startButton">Start</button>
+      <button id="stopButton">Stop</button>
+    </div>
+    <div id="container"></div>
+    <video
+      id="video"
+      playsinline
+      autoplay
+      muted
+      width="640"
+      height="360"
+      style="display: none"
+      crossorigin="anonymous"
+    ></video>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

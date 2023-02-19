@@ -1,23 +1,45 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+import * as THREE from "three";
+// @ts-expect-error
+import { MindARThree } from "mind-ar/dist/mindar-image-three.prod.js";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const mindarThree = new MindARThree({
+  container: document.querySelector("#container"),
+  // imageTargetSrc: "/src/darts.mind",
+  imageTargetSrc:
+    "https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.0/examples/image-tracking/assets/card-example/card.mind",
+  maxTrack: 1,
+  filterMinCF: 0.01,
+  filterBeta: 100,
+  missTorelance: 8,
+});
+const { renderer, scene, camera } = mindarThree;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const anchor = mindarThree.addAnchor(0);
+// 映像を投影するテクスチャを作成
+const texture = new THREE.VideoTexture(
+  document.getElementById("video") as HTMLVideoElement
+);
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter = THREE.LinearFilter;
+texture.format = THREE.RGBAFormat;
+const material = new THREE.MeshBasicMaterial({ map: texture });
+// 平面ジオメトリを作成して、テクスチャを貼り付ける
+const geometry = new THREE.PlaneGeometry(2, 2);
+const mesh = new THREE.Mesh(geometry, material);
+anchor.group.add(mesh);
+
+const start = async () => {
+  await mindarThree.start();
+  renderer.setAnimationLoop(() => {
+    renderer.render(scene, camera);
+  });
+};
+const startButton = document.querySelector("#startButton");
+startButton!.addEventListener("click", () => {
+  start();
+});
+const stopButton = document.querySelector("#stopButton");
+stopButton!.addEventListener("click", () => {
+  mindarThree.stop();
+  mindarThree.renderer.setAnimationLoop(null);
+});
