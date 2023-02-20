@@ -7,7 +7,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    https: {
+    https: !process.env.CI && {
       cert: readFileSync("./localhost.pem"),
       key: readFileSync("./localhost-key.pem"),
     },
