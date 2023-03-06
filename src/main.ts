@@ -1,7 +1,9 @@
 import * as THREE from "three";
 // @ts-expect-error
 import { MindARThree } from "mind-ar/dist/mindar-image-three.prod.js";
+import { useCanvas } from "./video";
 
+const video = document.getElementById("video") as HTMLMediaElement;
 const mindarThree = new MindARThree({
   container: document.querySelector("#container"),
   // imageTargetSrc: "/src/darts.mind",
@@ -15,14 +17,30 @@ const mindarThree = new MindARThree({
 const { renderer, scene, camera } = mindarThree;
 
 const anchor = mindarThree.addAnchor(0);
+
+const canvasControl = useCanvas();
+anchor.onTargetFound = () => {
+  video.play();
+  canvasControl.timer();
+};
+anchor.onTargetLost = () => {
+  video.pause();
+};
 // 映像を投影するテクスチャを作成
-const texture = new THREE.VideoTexture(
-  document.getElementById("video") as HTMLVideoElement
+// const texture = new THREE.VideoTexture(
+//   document.getElementById("video") as HTMLVideoElement
+// );
+const texture = new THREE.CanvasTexture(
+  document.getElementById("transparent-video") as HTMLCanvasElement
 );
 texture.minFilter = THREE.LinearFilter;
 texture.magFilter = THREE.LinearFilter;
 texture.format = THREE.RGBAFormat;
-const material = new THREE.MeshBasicMaterial({ map: texture });
+const material = new THREE.MeshBasicMaterial({
+  map: texture,
+  transparent: true,
+  opacity: 0.8,
+});
 // 平面ジオメトリを作成して、テクスチャを貼り付ける
 const geometry = new THREE.PlaneGeometry(2, 2);
 const mesh = new THREE.Mesh(geometry, material);
@@ -32,6 +50,7 @@ const start = async () => {
   await mindarThree.start();
   renderer.setAnimationLoop(() => {
     renderer.render(scene, camera);
+    texture.needsUpdate = !video.paused;
   });
 };
 const startButton = document.querySelector("#startButton");
