@@ -40,13 +40,7 @@ const start = async () => {
     // iOS Safari でテクスチャが透過表示されない問題のworkaround
     // canvasに一度描画し直す
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.drawImage(
-      video as CanvasImageSourceWebCodecs,
-      0,
-      0,
-      ctx.canvas.width,
-      ctx.canvas.height
-    );
+    ctx.drawImage(video, 0, 0, ctx.canvas.width, ctx.canvas.height);
     texture.needsUpdate = !video.paused;
     renderer.render(scene, camera);
   });
