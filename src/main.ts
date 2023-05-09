@@ -13,16 +13,17 @@ const mindarThree = new MindARThree({
   missTorelance: 8,
 });
 const { renderer, scene, camera } = mindarThree;
-
+const video = document.getElementById("video") as HTMLVideoElement;
 const anchor = mindarThree.addAnchor(0);
 // 映像を投影するテクスチャを作成
-const texture = new THREE.VideoTexture(
-  document.getElementById("video") as HTMLVideoElement
-);
+const texture = new THREE.VideoTexture(video);
 texture.minFilter = THREE.LinearFilter;
 texture.magFilter = THREE.LinearFilter;
 texture.format = THREE.RGBAFormat;
-const material = new THREE.MeshBasicMaterial({ map: texture });
+const material = new THREE.MeshBasicMaterial({
+  map: texture,
+  transparent: true,
+});
 // 平面ジオメトリを作成して、テクスチャを貼り付ける
 const geometry = new THREE.PlaneGeometry(2, 2);
 const mesh = new THREE.Mesh(geometry, material);
@@ -30,6 +31,7 @@ anchor.group.add(mesh);
 
 const start = async () => {
   await mindarThree.start();
+  video.play();
   renderer.setAnimationLoop(() => {
     renderer.render(scene, camera);
   });
